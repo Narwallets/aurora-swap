@@ -1,0 +1,10 @@
+{
+    "aurora": {
+        "wNearPrice": 1.2,
+        "stNearPrice": 1.5
+    },
+    "aurora_testnet": {
+        "wNearPrice": 1.2,
+        "stNearPrice": 1.5
+    }
+}
