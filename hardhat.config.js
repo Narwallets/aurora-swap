@@ -4,6 +4,7 @@ const fs = require('fs');
 const privateKey = fs.readFileSync(".secret").toString().trim();
 
 module.exports = {
+  defaultNetwork: "hardhat",
   networks: {
     aurora: {
       url: "https://mainnet.aurora.dev",
