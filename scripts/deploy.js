@@ -7,10 +7,10 @@ function toETH(value) {
 }
 
 async function main() {
-  let { wNearPrice, stNearPrice } = deploySettings[network.name]
+  let { wNearTokenAddress, stNearTokenAddress, wNearPrice, stNearPrice } = deploySettings[network.name]
 
   const AuroraStNear = await ethers.getContractFactory("AuroraStNear");
-  const auroraStNear = await AuroraStNear.deploy(toETH(wNearPrice), toETH(stNearPrice));
+  const auroraStNear = await AuroraStNear.deploy(wNearTokenAddress, stNearTokenAddress, toETH(wNearPrice), toETH(stNearPrice));
 
   await auroraStNear.deployed();
 
