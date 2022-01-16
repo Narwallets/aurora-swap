@@ -26,17 +26,15 @@ describe("AuroraStNear", () => {
 
     wNearPrice = toETH(0.5);
     stNearPrice = toETH(2);
-    wNearSwapFee = 15;
-    stNearSwapFee = 25;
+    wNearSwapFee = 30;
+    stNearSwapFee = 10;
 
     AuroraStNear = await ethers.getContractFactory("AuroraStNear");
     auroraStNear = await AuroraStNear.deploy(
       wNear.address,
       stNear.address,
       wNearPrice,
-      stNearPrice,
-      wNearSwapFee,
-      stNearSwapFee
+      stNearPrice
     );
 
     OPERATOR_ROLE = (await auroraStNear.OPERATOR_ROLE()).toLowerCase();

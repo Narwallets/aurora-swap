@@ -37,16 +37,14 @@ contract AuroraStNear is ReentrancyGuard, AccessControl {
         IERC20Metadata _wNear,
         IERC20Metadata _stNear,
         uint256 _wNearPrice,
-        uint256 _stNearPrice,
-        uint16 _wNearSwapFee,
-        uint16 _stNearSwapFee
+        uint256 _stNearPrice
     ) {
         wNear = _wNear;
         stNear = _stNear;
         wNearPrice = _wNearPrice;
         stNearPrice = _stNearPrice;
-        wNearSwapFee = _wNearSwapFee;
-        stNearSwapFee = _stNearSwapFee;
+        wNearSwapFee = 30;
+        stNearSwapFee = 10;
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
         grantRole(OPERATOR_ROLE, msg.sender);
     }
