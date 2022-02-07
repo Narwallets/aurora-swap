@@ -9,7 +9,9 @@
     "ethers": "^5.5.3",
     "hardhat": "^2.8.2",
     "prettier": "^2.5.1",
-    "prettier-plugin-solidity": "^1.0.0-beta.19"
+    "prettier-plugin-solidity": "^1.0.0-beta.19",
+    "bignumber.js": "^9.0.2",
+    "@ethersproject/experimental": "^5.5.0"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.4.2",

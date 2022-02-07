@@ -24,7 +24,6 @@ describe("AuroraStNear", () => {
     stNearAccumulatedFees = 0;
     wNearAccumulatedFees = 0;
 
-    wNearPrice = toETH(0.5);
     stNearPrice = toETH(2);
     wNearSwapFee = 30;
     stNearSwapFee = 10;
@@ -33,7 +32,6 @@ describe("AuroraStNear", () => {
     auroraStNear = await AuroraStNear.deploy(
       wNear.address,
       stNear.address,
-      wNearPrice,
       stNearPrice
     );
 
@@ -119,11 +117,11 @@ describe("AuroraStNear", () => {
       ).to.be.bignumber.equal(stNearSwapperPreviousBalance - stNearSwapAmount);
 
       let wNearToReceive =
-        (toETH(stNearSwapAmount) / (await auroraStNear.wNearPrice())) *
+        (toETH(stNearSwapAmount) * (await auroraStNear.stNearPrice()) / (await auroraStNear.decimals())) *
         (1 - (await auroraStNear.wNearSwapFee()) / 10000);
 
       wNearAccumulatedFees +=
-        (toETH(stNearSwapAmount) / (await auroraStNear.wNearPrice())) *
+      (toETH(stNearSwapAmount) * (await auroraStNear.stNearPrice()) / (await auroraStNear.decimals())) *
         ((await auroraStNear.wNearSwapFee()) / 10000);
 
       expect(
@@ -145,6 +143,13 @@ describe("AuroraStNear", () => {
         wNearSwapper.address
       );
 
+      let wNearAuroraPreviousBalance = await wNear.balanceOf(
+        auroraStNear.address
+      );
+      let stNearAuroraPreviousBalance = await stNear.balanceOf(
+        auroraStNear.address
+      );
+
       let stNearToReceive =
         (toETH(toETH(wNearSwapAmount)) / (await auroraStNear.stNearPrice())) *
         (1 - (await auroraStNear.stNearSwapFee()) / 10000);
@@ -164,6 +169,15 @@ describe("AuroraStNear", () => {
       expect(
         await stNear.balanceOf(wNearSwapper.address)
       ).to.be.bignumber.equal(stNearToReceive);
+      
+      // edit
+      expect(await wNear.balanceOf(auroraStNear.address)).equal(
+        wNearAuroraPreviousBalance.add(toETH(wNearSwapAmount))
+      );
+      // edit
+      expect(await stNear.balanceOf(auroraStNear.address)).to.be.bignumber.equal(
+        stNearAuroraPreviousBalance - stNearToReceive
+      );
     });
 
     it("Check accumulated fees", async () => {
@@ -184,9 +198,6 @@ describe("AuroraStNear", () => {
         " is missing role " +
         OPERATOR_ROLE;
 
-      await expect(
-        auroraStNear.connect(operator).setwNEARPrice(0)
-      ).to.be.revertedWith(nonOperatorMessage);
 
       await expect(
         auroraStNear.connect(operator).setstNEARPrice(0)
@@ -224,13 +235,10 @@ describe("AuroraStNear", () => {
     });
 
     it("Access operator functions", async () => {
-      wNearPrice = toETH(1.258);
       stNearPrice = toETH(125.12698);
       wNearSwapFee = 100;
       stNearSwapFee = 0;
 
-      await auroraStNear.connect(operator).setwNEARPrice(wNearPrice);
-      expect(await auroraStNear.wNearPrice()).eq(wNearPrice);
 
       await auroraStNear.connect(operator).setstNEARPrice(stNearPrice);
       expect(await auroraStNear.stNearPrice()).eq(stNearPrice);

@@ -9,4 +9,7 @@ contract MockERC20 is ERC20 {
     function mint(uint256 _amount, address _to) external {
         _mint(_to, _amount);
     }
+    function decimals() public view virtual override returns (uint8) {
+        return 24;
+    }
 }

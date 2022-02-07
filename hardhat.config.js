@@ -13,7 +13,18 @@ module.exports = {
     aurora_testnet: {
       url: "https://testnet.aurora.dev",
       accounts: [privateKey]
+    },
+    goerli_network: {
+      url: "https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
+      accounts: [privateKey]
+    },
+    aurora_testnet_console:{
+      url: "https://testnet.aurora.dev",
+      accounts: ["300a9c014426187f28b2d8b92c16c8c36243eff1235549fb040002ea4874c108"]
     }
   },
   solidity: "0.8.4",
+  mocha: {
+    timeout: 100000
+  }
 };

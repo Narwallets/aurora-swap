@@ -18,8 +18,6 @@ contract AuroraStNear is ReentrancyGuard, AccessControl {
     IERC20Metadata public immutable stNear;
 
     bytes32 public constant OPERATOR_ROLE = keccak256("OPERATOR");
-    // wNEAR/stNEAR price
-    uint256 public wNearPrice;
     // stNEAR/wNEAR price
     uint256 public stNearPrice;
     uint256 public wNearAccumulatedFees;
@@ -36,12 +34,10 @@ contract AuroraStNear is ReentrancyGuard, AccessControl {
     constructor(
         IERC20Metadata _wNear,
         IERC20Metadata _stNear,
-        uint256 _wNearPrice,
         uint256 _stNearPrice
     ) {
         wNear = _wNear;
         stNear = _stNear;
-        wNearPrice = _wNearPrice;
         stNearPrice = _stNearPrice;
         wNearSwapFee = 30;
         stNearSwapFee = 10;
@@ -50,7 +46,12 @@ contract AuroraStNear is ReentrancyGuard, AccessControl {
     }
 
     function swapwNEARForstNEAR(uint256 _amount) external nonReentrant {
-        uint256 stNearAmount = (_amount * (10**stNear.decimals())) /
+        uint256 stNearDecimals = stNear.decimals();
+        // aurora testnet bug
+        if (stNearDecimals == 0){
+            stNearDecimals = 24;
+        }
+        uint256 stNearAmount = (_amount * (10**stNearDecimals)) /
             stNearPrice;
         uint256 feeAmount = (stNearAmount * stNearSwapFee) / 10000;
         stNearAccumulatedFees += feeAmount;
@@ -64,7 +65,12 @@ contract AuroraStNear is ReentrancyGuard, AccessControl {
     }
 
     function swapstNEARForwNEAR(uint256 _amount) external nonReentrant {
-        uint256 wNearAmount = (_amount * (10**wNear.decimals())) / wNearPrice;
+        uint256 stNearDecimals = stNear.decimals();
+        // aurora testnet bug
+        if (stNearDecimals == 0){
+            stNearDecimals = 24;
+        }
+        uint256 wNearAmount = (_amount * stNearPrice) / (10**stNearDecimals);
         uint256 feeAmount = (wNearAmount * wNearSwapFee) / 10000;
         wNearAccumulatedFees += feeAmount;
         wNearAmount -= feeAmount;
@@ -77,13 +83,6 @@ contract AuroraStNear is ReentrancyGuard, AccessControl {
     }
 
     // Operator functions
-    function setwNEARPrice(uint256 _wNearPrice)
-        external
-        onlyRole(OPERATOR_ROLE)
-    {
-        wNearPrice = _wNearPrice;
-    }
-
     function setstNEARPrice(uint256 _stNearPrice)
         external
         onlyRole(OPERATOR_ROLE)

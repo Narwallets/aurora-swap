@@ -2,13 +2,13 @@
     "aurora": {
         "wNearTokenAddress": "0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d",
         "stNearTokenAddress": "0x07F9F7f963C5cD2BBFFd30CcfB964Be114332E30",
-        "wNearPrice": 1.2,
         "stNearPrice": 1.5
     },
     "aurora_testnet": {
-        "wNearTokenAddress": "",
-        "stNearTokenAddress": "",
-        "wNearPrice": 1.2,
-        "stNearPrice": 1.5
+        "wNearTokenAddress_own": "0xff14b292a7151a40fe0395bd087095dd4192ef03",
+        "stNearTokenAddress_own": "0x8f82dc077a74d047784894f520b4d2fa7d78ec47",
+        "stNearTokenAddress":"0x2137df2e54abd6bf1c1a8c1739f2ea6a8c15f144",
+        "wNearTokenAddress":"0x4861825e75ab14553e5af711ebbe6873d369d146",
+        "stNearPrice": 1.0516772016
     }
 }
