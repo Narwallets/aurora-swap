@@ -9,7 +9,7 @@ function toToken(value) {
 }
 
 async function main() {
-  let { wNearTokenAddress, stNearTokenAddress, wNearPrice, stNearPrice } = deploySettings[network.name]
+  let { wNearTokenAddress, stNearTokenAddress, stNearPrice } = deploySettings[network.name]
 
   const AuroraStNear = await ethers.getContractFactory("AuroraStNear");
   const auroraStNear = await AuroraStNear.deploy(wNearTokenAddress, stNearTokenAddress, toToken(stNearPrice));

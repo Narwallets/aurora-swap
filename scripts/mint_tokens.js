@@ -1,7 +1,7 @@
 const { ethers, network } = require("hardhat");
 const mintSettings = require("../mintSettings.json");
 const deploySettings = require("../deploySettings.json");
-const testSettings = require("../liveTestSettings.json");
+const testSettings = require("../settings.json");
 
 function toETH(value) {
   value = value.toString();

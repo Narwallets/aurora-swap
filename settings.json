@@ -1,0 +1,9 @@
+{
+    "aurora": {
+        
+    },
+    "aurora_testnet": {
+        "mintTo": "0x1e4DF0B85ddF4526f82E10B94129301518eDCA94",
+        "swapAccount": "0x0dF588AabDd4E031f1903326cC0d8E79DFBD3566"
+    }
+}
