@@ -1,6 +1,6 @@
 node_modules
 .env
-.secret
+.secret*
 coverage
 coverage.json
 typechain
@@ -8,3 +8,4 @@ own/
 #Hardhat files
 cache
 artifacts
+flat.sol

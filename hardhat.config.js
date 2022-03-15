@@ -1,14 +1,17 @@
 require("@nomiclabs/hardhat-waffle");
+require("./scripts/management");
 
 const fs = require('fs');
 const privateKey = fs.readFileSync(".secret").toString().trim();
+const privateKeyMainnet = fs.readFileSync(".secret-mainnet").toString().trim();
+
 
 module.exports = {
   defaultNetwork: "hardhat",
   networks: {
     aurora: {
       url: "https://mainnet.aurora.dev",
-      accounts: [privateKey]
+      accounts: [privateKeyMainnet]
     },
     aurora_testnet: {
       url: "https://testnet.aurora.dev",

@@ -2,7 +2,7 @@
     "aurora": {
         "wNearTokenAddress": "0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d",
         "stNearTokenAddress": "0x07F9F7f963C5cD2BBFFd30CcfB964Be114332E30",
-        "stNearPrice": 1.5
+        "stNearPrice": 1.0635558803
     },
     "aurora_testnet": {
         "wNearTokenAddress_own": "0xff14b292a7151a40fe0395bd087095dd4192ef03",
