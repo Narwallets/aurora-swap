@@ -2,9 +2,10 @@ require("@nomiclabs/hardhat-waffle");
 require("./scripts/management");
 
 const fs = require('fs');
-const privateKey = fs.readFileSync(".secret").toString().trim();
-const privateKeyMainnet = fs.readFileSync(".secret-mainnet").toString().trim();
-
+const os = require('os');
+const path = require('path');
+const privateKey = fs.readFileSync(path.join(os.homedir(),".near-credentials","testnet","AURORA_SWAP_ADMIN.json")).toString().trim();
+const privateKeyMainnet = fs.readFileSync(path.join(os.homedir(),".near-credentials","mainnet","AURORA_SWAP_ADMIN.json")).toString().trim();
 
 module.exports = {
   defaultNetwork: "hardhat",
