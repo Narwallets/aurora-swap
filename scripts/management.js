@@ -29,7 +29,7 @@ task("manage", "Manage swap contract settings")
     if (setStnearFee === "true") {
       try {
         const stNearFee = settings[network.name].stNearFee
-        console.log("setting stNear fee to " + stNearFee)
+        console.log("setting stNear fee from settings.json to " + stNearFee)
         let tx = await swap.setstNEARSwapFee(stNearFee)
         console.log("transaction sent:")
         console.log(tx)
@@ -41,7 +41,7 @@ task("manage", "Manage swap contract settings")
     if (setWnearFee === "true") {
       try {
         const wNearFee = settings[network.name].wNearFee
-        console.log("setting wNear fee to " + wNearFee)
+        console.log("setting wNear fee from settings.json to " + wNearFee)
         let tx = await swap.setwNEARSwapFee(wNearFee)
         console.log("transaction sent:")
         console.log(tx)
@@ -54,7 +54,7 @@ task("manage", "Manage swap contract settings")
     if (setPrice === "true") {
       try {
         const stNearPrice = settings[network.name].stNearPrice
-        console.log("setting stNear price to " + stNearPrice)
+        console.log("setting stNear price to " + ethers.utils.formatUnits(stNearPrice, 24))
         let tx = await swap.setstNEARPrice(stNearPrice)
         console.log("transaction sent:")
         console.log(tx)
@@ -69,7 +69,7 @@ task("manage", "Manage swap contract settings")
         console.log("requesting data...")
 
         let tx1 = await swap.stNearPrice()
-        console.log("stNear price: " + tx1)
+        console.log("stNear price: " + ethers.utils.formatUnits(tx1, 24))
         let tx5 = await swap.stNearSwapFee()
         console.log("stNear fee: " + tx5)
         let tx4 = await swap.wNearSwapFee()
