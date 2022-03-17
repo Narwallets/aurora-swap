@@ -1,17 +1,31 @@
+const ether = require("@openzeppelin/test-helpers/src/ether");
+
 task("manage", "Manage swap contract settings")
   .addOptionalParam("setStnearFee", "<true|false>")
   .addOptionalParam("setWnearFee", "<true|false>")
   .addOptionalParam("setPrice", "<true|false>")
   .addOptionalParam("getState", "<true|false>")
+  .addOptionalParam("withdrawNear", "<amount>")
+  .addOptionalParam("withdrawStnear", "<amount>")
   .setAction(async (taskArgs) => {
     const { ethers, network, task } = require("hardhat");
     const settings = require("../settings.json");
 
+    if (!settings[network.name]) {
+      throw "--network arg is missing"
+    }
     const swapAccount = settings[network.name].swapAccount
     const AuroraStNear = await ethers.getContractFactory("AuroraStNear");
 
     const swap = AuroraStNear.attach(swapAccount);
-    let { setStnearFee, setWnearFee, setPrice, getState } = taskArgs
+    let { 
+      setStnearFee, 
+      setWnearFee, 
+      setPrice, 
+      getState, 
+      withdrawNear,
+      withdrawStnear
+     } = taskArgs
     
     if (setStnearFee != "true" && setStnearFee != "false" && setStnearFee != undefined){
       throw "error in command argument"
@@ -64,6 +78,29 @@ task("manage", "Manage swap contract settings")
         console.error(e)
       }
     }
+
+    if (withdrawNear !== undefined) {
+      try {
+        console.log(`withdraw ${withdrawNear} Near from contract`)
+        let tx = await swap.withdrawwNEAR(ethers.utils.parseUnits(withdrawNear,24))
+        console.log("transaction sent:",tx)
+      } catch (e) {
+        console.error("error en withdrawNear")
+        console.error(e)
+      }
+    }
+        
+    if (withdrawStnear !== undefined) {
+      try {
+        console.log(`withdraw ${withdrawStnear} stNear from contract`)
+        let tx = await swap.withdrawstNEAR(ethers.utils.parseUnits(withdrawStnear,24))
+        console.log("transaction sent:",tx)
+      } catch (e) {
+        console.error("error en withdrawstNEAR")
+        console.error(e)
+      }
+    }
+
     if (getState === "true") {
       try {
         console.log("requesting data...")
