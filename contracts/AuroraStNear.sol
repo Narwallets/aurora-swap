@@ -26,16 +26,16 @@ contract AuroraStNear is ReentrancyGuard, AccessControl {
     uint16 public wNearSwapFee;
     uint16 public stNearSwapFee;
 
-    event wNearDeposit(address indexed admin, uint256 amount);
-    event stNearDeposit(address indexed admin, uint256 amount);
     event wNearWithdraw(address indexed admin, uint256 amount);
     event stNearWithdraw(address indexed admin, uint256 amount);
 
     constructor(
         IERC20Metadata _wNear,
         IERC20Metadata _stNear,
-        uint256 _stNearPrice
+        uint256 _stNearPrice,
     ) {
+        require(_stNearPrice != 0, "stNear price can't be 0");
+
         wNear = _wNear;
         stNear = _stNear;
         stNearPrice = _stNearPrice;
@@ -51,6 +51,7 @@ contract AuroraStNear is ReentrancyGuard, AccessControl {
         if (stNearDecimals == 0){
             stNearDecimals = 24;
         }
+
         uint256 stNearAmount = (_amount * (10**stNearDecimals)) /
             stNearPrice;
         uint256 feeAmount = (stNearAmount * stNearSwapFee) / 10000;
@@ -70,6 +71,7 @@ contract AuroraStNear is ReentrancyGuard, AccessControl {
         if (stNearDecimals == 0){
             stNearDecimals = 24;
         }
+        
         uint256 wNearAmount = (_amount * stNearPrice) / (10**stNearDecimals);
         uint256 feeAmount = (wNearAmount * wNearSwapFee) / 10000;
         wNearAccumulatedFees += feeAmount;
@@ -87,6 +89,7 @@ contract AuroraStNear is ReentrancyGuard, AccessControl {
         external
         onlyRole(OPERATOR_ROLE)
     {
+        require(_stNearPrice != 0, "stNear price can't be 0");
         stNearPrice = _stNearPrice;
     }
 
@@ -134,6 +137,6 @@ contract AuroraStNear is ReentrancyGuard, AccessControl {
             stNearAccumulatedFees -= _amount;
         }
         stNear.safeTransfer(msg.sender, _amount);
-        emit wNearWithdraw(msg.sender, _amount);
+        emit stNearWithdraw(msg.sender, _amount);
     }
 }
