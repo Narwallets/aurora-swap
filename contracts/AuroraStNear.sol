@@ -32,15 +32,29 @@ contract AuroraStNear is ReentrancyGuard, AccessControl {
     constructor(
         IERC20Metadata _wNear,
         IERC20Metadata _stNear,
-        uint256 _stNearPrice,
+        uint256 _stNearPrice
     ) {
-        require(_stNearPrice != 0, "stNear price can't be 0");
+        require(_stNearPrice > 1_000_000_000_000_000_000_000_000, "stNear price can't be less than 1 wNEAR");
+
+        uint256 stNearDecimals = _stNear.decimals();
+        // aurora testnet bug, testnet bridge sets decimals=0
+        if (stNearDecimals == 0){
+            stNearDecimals = 24;
+        }
+        require(stNearDecimals==24,"stNearDecimals must be 24");
+        uint256 wNearDecimals = _wNear.decimals();
+        // aurora testnet bug, testnet bridge sets decimals=0
+        if (wNearDecimals == 0){
+            wNearDecimals = 24;
+        }
+        require(wNearDecimals==24,"wNearDecimals must be 24");
 
         wNear = _wNear;
         stNear = _stNear;
         stNearPrice = _stNearPrice;
-        wNearSwapFee = 30;
+        wNearSwapFee = 40;
         stNearSwapFee = 10;
+
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
         grantRole(OPERATOR_ROLE, msg.sender);
     }
@@ -89,7 +103,7 @@ contract AuroraStNear is ReentrancyGuard, AccessControl {
         external
         onlyRole(OPERATOR_ROLE)
     {
-        require(_stNearPrice != 0, "stNear price can't be 0");
+        require(_stNearPrice > 1_000_000_000_000_000_000_000_000, "stNear price can't be less than 1 wNEAR");
         stNearPrice = _stNearPrice;
     }
 
