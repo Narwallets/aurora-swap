@@ -1,15 +1,23 @@
 {
     "aurora": {
-        "swapAccount": "0x4Fd50983aFAb6d8f8202A8d50f81Cb0e71257342",
+        "swapAccount": "0x534BACf1126f60EA513F796a3377ff432BE62cf9",
         "stNearFee": "10",
         "wNearFee": "40",
-        "stNearPrice": "1064358470874255067121221"
-    },
+        "stNearPrice": "1064358470874255067121221",
+        "stNearAddress": "0x07F9F7f963C5cD2BBFFd30CcfB964Be114332E30",
+        "wNearAddress": "0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d",
+        "adminAccount": "0x37a86c3Ec281A70Da4d438e2D744137850Ff8E7b",
+        "withdrawAccount": "0x8B1CC6e8191297c80E14d989EAd1a2125749Bd4D",
+        "refillAccount": "0xf54009C0BE4B9EDE101A1fff26a83F2DCe3FDCa9"
+      },
     "aurora_testnet": {
         "mintTo": "0x1e4DF0B85ddF4526f82E10B94129301518eDCA94",
         "swapAccount": "0x0dF588AabDd4E031f1903326cC0d8E79DFBD3566",
-        "stNearFee": "30",
+        "stNearFee": "10",
         "wNearFee": "40",
-        "stNearPrice": "1801609871864096625110461"
+        "stNearPrice": "1801609871864096625110461",
+        "stNearAddress": "0x2137df2e54abd6bf1c1a8c1739f2ea6a8c15f144",
+        "wNearAddress": "0x4861825e75ab14553e5af711ebbe6873d369d146"
+  
     }
 }
